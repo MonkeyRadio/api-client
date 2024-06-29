@@ -4,23 +4,28 @@ export abstract class BaseRepository<T extends object> {
   protected readonly resource: string = "";
   protected readonly instance: FetcherInstance | undefined;
 
-  protected async create(data: T) {
-    return this.instance?.post<T>(this.resource, data);
+  public async create(data: T): Promise<T> {
+    if (!this.instance) throw new Error("FetcherInstance is not defined");
+    return this.instance.post<T>(this.resource, data);
   }
 
-  protected async read(id: number) {
-    return this.instance?.get<T>(`${this.resource}/${id}`);
+  public async read(id: number): Promise<T> {
+    if (!this.instance) throw new Error("FetcherInstance is not defined");
+    return this.instance.get<T>(`${this.resource}/${id}`);
   }
 
-  protected async readAll() {
-    return this.instance?.get<T[]>(this.resource);
+  public async readAll(): Promise<T[]> {
+    if (!this.instance) throw new Error("FetcherInstance is not defined");
+    return this.instance.get<T[]>(this.resource);
   }
 
-  protected async update(id: number, data: T) {
-    return this.instance?.put<T>(`${this.resource}/${id}`, data);
+  public async update(id: number, data: T): Promise<T> {
+    if (!this.instance) throw new Error("FetcherInstance is not defined");
+    return this.instance.put<T>(`${this.resource}/${id}`, data);
   }
 
-  protected async delete(id: number) {
-    return this.instance?.delete<T>(`${this.resource}/${id}`);
+  public async delete(id: number): Promise<T> {
+    if (!this.instance) throw new Error("FetcherInstance is not defined");
+    return this.instance.delete<T>(`${this.resource}/${id}`);
   }
 }
