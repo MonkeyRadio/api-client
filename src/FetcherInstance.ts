@@ -1,24 +1,47 @@
 import { type CreateFetchOptions, ofetch } from "ofetch";
+import { jwtDecode } from "jwt-decode";
+import { AuthRepository } from "./repositories/AuthRepository";
 
 export class FetcherInstance {
-  private readonly token: string | null = null;
+  private token: string | null = null;
   constructor(private readonly baseUrl: string) {}
 
-  private getBaseHeaders(): HeadersInit {
-    if (this.token)
+  private async ensureTokenValid() {
+    if (!this.token) {
+      throw new Error("No token provided");
+    }
+    const tokenDecoded = jwtDecode(this.token);
+    if (tokenDecoded.exp && tokenDecoded.exp * 1000 < Date.now()) {
+      const authRepository = new AuthRepository(this);
+      await authRepository.renewToken();
+    }
+  }
+
+  private async getBaseHeaders(): Promise<HeadersInit> {
+    if (this.token) {
+      await this.ensureTokenValid();
       return {
-        Authorization: this.token,
+        Authorization: `Bearer ${this.token}`,
         Accept: "application/json",
       };
+    }
     return {
       Accept: "application/json",
     };
   }
 
+  public setToken(token: string) {
+    this.token = token;
+  }
+
+  public clearToken() {
+    this.token = null;
+  }
+
   public async get<T>(url: string, options?: CreateFetchOptions) {
     return await ofetch<T>(`${this.baseUrl}${url}`, {
       headers: {
-        ...this.getBaseHeaders(),
+        ...(await this.getBaseHeaders()),
       },
       ...options,
     });
@@ -32,7 +55,7 @@ export class FetcherInstance {
     return await ofetch<T>(`${this.baseUrl}${url}`, {
       method: "POST",
       headers: {
-        ...this.getBaseHeaders(),
+        ...(await this.getBaseHeaders()),
         "Content-Type": "application/json",
       },
       body,
@@ -44,7 +67,7 @@ export class FetcherInstance {
     return await ofetch<T>(`${this.baseUrl}${url}`, {
       method: "PUT",
       headers: {
-        ...this.getBaseHeaders(),
+        ...(await this.getBaseHeaders()),
         "Content-Type": "application/json",
       },
       body,
@@ -56,7 +79,7 @@ export class FetcherInstance {
     return await ofetch<T>(`${this.baseUrl}${url}`, {
       method: "DELETE",
       headers: {
-        ...this.getBaseHeaders(),
+        ...(await this.getBaseHeaders()),
       },
       ...options,
     });
