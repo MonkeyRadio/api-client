@@ -1,6 +1,6 @@
 import type { FetcherInstance } from "../FetcherInstance";
 
-export abstract class BaseRepository<T> {
+export abstract class BaseRepository<T extends object> {
   protected readonly resource: string = "";
   protected readonly instance: FetcherInstance | undefined;
 
