@@ -9,7 +9,7 @@ export abstract class BaseRepository<T extends object> {
     return this.instance.post<T>(this.resource, data);
   }
 
-  public async read(id: number): Promise<T> {
+  public async read(id: string): Promise<T> {
     if (!this.instance) throw new Error("FetcherInstance is not defined");
     return this.instance.get<T>(`${this.resource}/${id}`);
   }
@@ -19,12 +19,12 @@ export abstract class BaseRepository<T extends object> {
     return this.instance.get<T[]>(this.resource);
   }
 
-  public async update(id: number, data: T): Promise<T> {
+  public async update(id: string, data: T): Promise<T> {
     if (!this.instance) throw new Error("FetcherInstance is not defined");
     return this.instance.put<T>(`${this.resource}/${id}`, data);
   }
 
-  public async delete(id: number): Promise<T> {
+  public async delete(id: string): Promise<T> {
     if (!this.instance) throw new Error("FetcherInstance is not defined");
     return this.instance.delete<T>(`${this.resource}/${id}`);
   }
