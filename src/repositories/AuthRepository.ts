@@ -2,17 +2,10 @@ import type { User } from "../models/User";
 import { FetcherInstance } from "../FetcherInstance";
 import type {
   LoginDataResponse,
+  LoginOpts,
+  LoginTokenDataResponse,
   RenewTokenDataResponse,
 } from "../responses/AuthResponses";
-
-type LoginOpts =
-  | {
-      nickname: string;
-      password: string;
-    }
-  | {
-      token: string;
-    };
 
 export class AuthRepository {
   protected resource = "/v4/auth";
@@ -22,14 +15,17 @@ export class AuthRepository {
     this.instance = instance;
   }
 
-  public async login(opts: LoginOpts): Promise<LoginDataResponse | User> {
-    if ("token" in opts) {
+  public async login<T extends LoginOpts>(
+    opts: T,
+  ): Promise<LoginDataResponse<T>> {
+    if ("token" in opts && opts.token) {
       this.instance.setToken(opts.token);
-      return this.me();
+      const user = await this.me();
+      return user as LoginDataResponse<T>;
     }
     if ("nickname" in opts && "password" in opts) {
       const { nickname, password } = opts;
-      const user = await this.instance.post<LoginDataResponse>(
+      const user = await this.instance.post<LoginTokenDataResponse>(
         `${this.resource}/login`,
         {
           nickname,

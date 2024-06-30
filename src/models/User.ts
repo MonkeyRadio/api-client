@@ -5,4 +5,5 @@ export interface User extends Model {
   nickname: string;
   email: string;
   roles: string[];
+  scopes: string[];
 }
