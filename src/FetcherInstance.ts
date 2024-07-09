@@ -1,10 +1,13 @@
 import { type CreateFetchOptions, ofetch } from "ofetch";
 import { jwtDecode } from "jwt-decode";
-import { AuthRepository } from "./repositories/AuthRepository";
+import type { EventController } from "./EventController";
 
 export class FetcherInstance {
   private token: string | null = null;
-  constructor(private readonly baseUrl: string) {}
+  constructor(
+    private readonly baseUrl: string,
+    public readonly events: EventController,
+  ) {}
 
   private async ensureTokenValid() {
     if (!this.token) {
@@ -12,8 +15,20 @@ export class FetcherInstance {
     }
     const tokenDecoded = jwtDecode(this.token);
     if (tokenDecoded.exp && tokenDecoded.exp * 1000 < Date.now()) {
-      const authRepository = new AuthRepository(this);
-      await authRepository.renewToken();
+      const token = await ofetch<{ token: string }>(
+        `${this.baseUrl}/v4/auth/renewToken`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            Accept: "application/json",
+          },
+        },
+      );
+      this.token = token.token;
+      this.events
+        .getCallbacks("tokenRenewed")
+        ?.forEach((cb) => cb(token.token));
     }
   }
 

@@ -33,6 +33,9 @@ export class AuthRepository {
         },
       );
       this.instance.setToken(user.token);
+      this.instance.events
+        .getCallbacks("loggedIn")
+        ?.forEach((cb) => cb(user, user.token));
       return user;
     }
     throw new Error("Invalid login options");
@@ -41,6 +44,7 @@ export class AuthRepository {
   public async logout() {
     await this.instance.post(`${this.resource}/logout`, {});
     this.instance.clearToken();
+    this.instance.events.getCallbacks("loggedOut")?.forEach((cb) => cb());
   }
 
   public async me(): Promise<User> {
