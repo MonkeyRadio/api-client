@@ -12,9 +12,9 @@ export type Event = {
   loggedIn: {
     params: {
       user: User;
-      token: string;
+      token?: string | undefined;
     };
-    callback: (user: User, token: string) => void;
+    callback: (user: User, token?: string | undefined) => void;
   };
   loggedOut: {
     params: EmptyObject;

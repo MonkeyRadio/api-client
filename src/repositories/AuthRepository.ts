@@ -8,11 +8,10 @@ import type {
 } from "../responses/AuthResponses";
 
 export class AuthRepository {
-  protected resource = "/v4/auth";
-  protected instance: FetcherInstance;
+  protected resource;
 
-  constructor(instance: FetcherInstance) {
-    this.instance = instance;
+  constructor(protected readonly instance: FetcherInstance) {
+    this.resource = `${this.instance.opts.baseUrl}/v4/auth`;
   }
 
   public async login<T extends LoginOpts>(
@@ -21,6 +20,7 @@ export class AuthRepository {
     if ("token" in opts && opts.token) {
       this.instance.setToken(opts.token);
       const user = await this.me();
+      this.instance.events.getCallbacks("loggedIn")?.forEach((cb) => cb(user));
       return user as LoginDataResponse<T>;
     }
     if ("nickname" in opts && "password" in opts) {
