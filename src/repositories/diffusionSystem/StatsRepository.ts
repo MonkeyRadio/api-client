@@ -5,7 +5,7 @@ export class StatsRepository {
   protected resource;
 
   constructor(protected readonly instance: FetcherInstance) {
-    this.resource = `${this.instance.opts.diffusionUrl}/stats`;
+    this.resource = `${this.instance.opts.diffusionUrl}/v1/stats`;
   }
 
   public async listeners(

@@ -6,7 +6,7 @@ export class ListenerRepository {
   protected resource;
 
   constructor(protected readonly instance: FetcherInstance) {
-    this.resource = `${this.instance.opts.diffusionUrl}/listeners`;
+    this.resource = `${this.instance.opts.diffusionUrl}/v1/listeners`;
   }
 
   public async list(opts?: {
