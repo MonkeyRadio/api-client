@@ -9,4 +9,13 @@ export class RadiosRepository extends BaseRepository<Radio> {
     super();
     this.resource = `${this.instance.opts.baseUrl}/v4/radio`;
   }
+
+  public async fromDomain(domain: string): Promise<Radio> {
+    const query = this.instance.newQueryMap();
+
+    query.set("domain", domain);
+    return this.instance.get<Radio>(
+      `${this.resource}/findByDomain?${this.instance.buildQueryString(query)}`,
+    );
+  }
 }

@@ -28,7 +28,7 @@
     "declaration": true,
 
     "verbatimModuleSyntax": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "tsc-alias": {
     "resolveFullPaths": true,
