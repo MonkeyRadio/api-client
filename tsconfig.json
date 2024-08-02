@@ -26,10 +26,11 @@
     "experimentalDecorators": true,
     "downlevelIteration": true,
     "declaration": true,
+    "declarationMap": true,
 
     "pretty": true,
     "composite": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
   },
   "include": ["typings/**/*", "src/**/*"]
 }
