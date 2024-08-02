@@ -30,7 +30,7 @@
 
     "pretty": true,
     "composite": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   },
   "include": ["typings/**/*", "src/**/*"]
 }
