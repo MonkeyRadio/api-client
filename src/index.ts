@@ -18,5 +18,8 @@ export {
 export { type PaginatedResponse } from "./types/PaginatedResponse";
 export { type StatsListenersResponse } from "./responses/diffusionSystem/StatsListenersResponse";
 
+// Opts
+export { type LoginOpts } from "./responses/AuthResponses";
+
 // Repositories
 export { MonkeyRadioAPI } from "./MonkeyRadioAPI";
