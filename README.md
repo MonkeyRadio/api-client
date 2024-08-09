@@ -34,7 +34,7 @@ Then let your favourite ide autocomplete through repositories and endpoints than
 - Radios (CRUD)
   - fromDomain
 - Diffusion Repositories
-  - Listneners
+  - Listeners
     - list
   - Stats
     - listeners
