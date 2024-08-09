@@ -17,6 +17,7 @@ export {
 } from "./responses/AuthResponses";
 export { type PaginatedResponse } from "./types/PaginatedResponse";
 export { type StatsListenersResponse } from "./responses/diffusionSystem/StatsListenersResponse";
+export { type HealthCheckResponse } from "./responses/HealthCheckResponse";
 
 // Opts
 export { type LoginOpts } from "./responses/AuthResponses";
