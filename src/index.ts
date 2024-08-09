@@ -23,3 +23,4 @@ export { type LoginOpts } from "./responses/AuthResponses";
 
 // Repositories
 export { MonkeyRadioAPI } from "./MonkeyRadioAPI";
+export type { BaseRepository } from "./repositories/BaseRepository";
