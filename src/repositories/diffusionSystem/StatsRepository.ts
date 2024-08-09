@@ -2,10 +2,10 @@ import type { FetcherInstance } from "../../FetcherInstance";
 import type { StatsListenersResponse } from "../../responses/diffusionSystem/StatsListenersResponse";
 
 export class StatsRepository {
-  protected resource;
+  constructor(protected readonly instance: FetcherInstance) {}
 
-  constructor(protected readonly instance: FetcherInstance) {
-    this.resource = `${this.instance.opts.diffusionUrl}/v1/stats`;
+  protected get resource() {
+    return `${this.instance.opts.baseUrl}/v1/stats`;
   }
 
   public async listeners(

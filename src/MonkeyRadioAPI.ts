@@ -1,4 +1,4 @@
-import { RadiosRepository } from "./repositories/RadiosRepository";
+import { RadioRepository } from "./repositories/RadioRepository";
 import { FetcherInstance } from "./FetcherInstance";
 import { AuthRepository } from "./repositories/AuthRepository";
 import { EventController } from "./EventController";
@@ -11,7 +11,7 @@ export class MonkeyRadioAPI {
   private readonly fetcher: FetcherInstance;
   public readonly events: EventController;
 
-  public readonly radios: RadiosRepository;
+  public readonly radio: RadioRepository;
   public readonly auth: AuthRepository;
   public readonly health: HealthCheckRepository;
 
@@ -24,13 +24,20 @@ export class MonkeyRadioAPI {
     this.events = new EventController();
     this.fetcher = new FetcherInstance(this.opts, this.events);
 
-    this.radios = new RadiosRepository(this.fetcher);
+    this.radio = new RadioRepository(this.fetcher);
     this.auth = new AuthRepository(this.fetcher);
     this.health = new HealthCheckRepository(this.fetcher);
 
     this.diffusionSystem = {
       listeners: new ListenerRepository(this.fetcher),
       stats: new StatsRepository(this.fetcher),
+    };
+  }
+
+  public changeOpts(opts: Partial<ConstructorOpts>) {
+    this.fetcher.opts = {
+      ...this.fetcher.opts,
+      ...opts,
     };
   }
 }

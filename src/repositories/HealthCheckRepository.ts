@@ -2,10 +2,10 @@ import { FetcherInstance } from "../FetcherInstance";
 import type { HealthCheckResponse } from "../responses/HealthCheckResponse";
 
 export class HealthCheckRepository {
-  protected resource;
+  constructor(protected readonly instance: FetcherInstance) {}
 
-  constructor(protected readonly instance: FetcherInstance) {
-    this.resource = `${this.instance.opts.baseUrl}/v4/health-check`;
+  protected get resource() {
+    return `${this.instance.opts.baseUrl}/v4/health-check`;
   }
 
   public async checkHealth(): Promise<HealthCheckResponse> {

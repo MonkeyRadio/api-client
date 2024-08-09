@@ -3,10 +3,10 @@ import type { Listener } from "../../models/diffusionSystem/Listener";
 import type { PaginatedResponse } from "../../types/PaginatedResponse";
 
 export class ListenerRepository {
-  protected resource;
+  constructor(protected readonly instance: FetcherInstance) {}
 
-  constructor(protected readonly instance: FetcherInstance) {
-    this.resource = `${this.instance.opts.diffusionUrl}/v1/listeners`;
+  protected get resource() {
+    return `${this.instance.opts.baseUrl}/v1/listeners`;
   }
 
   public async list(opts?: {

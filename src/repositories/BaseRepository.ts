@@ -1,8 +1,11 @@
 import type { FetcherInstance } from "../FetcherInstance";
 
 export abstract class BaseRepository<T extends object = object> {
-  protected readonly resource: string = "";
   protected instance: FetcherInstance | undefined;
+
+  protected get resource() {
+    return "";
+  }
 
   public async create(data: T): Promise<T> {
     if (!this.instance) throw new Error("FetcherInstance is not defined");

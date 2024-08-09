@@ -8,10 +8,10 @@ import type {
 } from "../responses/AuthResponses";
 
 export class AuthRepository {
-  protected resource;
+  constructor(protected readonly instance: FetcherInstance) {}
 
-  constructor(protected readonly instance: FetcherInstance) {
-    this.resource = `${this.instance.opts.baseUrl}/v4/auth`;
+  protected get resource() {
+    return `${this.instance.opts.baseUrl}/v4/auth`;
   }
 
   public async login<T extends LoginOpts>(

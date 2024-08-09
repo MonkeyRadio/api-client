@@ -6,7 +6,7 @@ import type { ConstructorOpts } from "./types/ConstructorOpts";
 export class FetcherInstance {
   private token: string | null = null;
   constructor(
-    public readonly opts: ConstructorOpts,
+    public opts: ConstructorOpts,
     public readonly events: EventController,
   ) {}
 
