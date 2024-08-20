@@ -7,6 +7,7 @@ export { type Listener } from "./models/diffusionSystem/Listener";
 export {
   type DiffusionLinkType,
   type DiffusionLinkContainerType,
+  type DiffusionLink,
   type OnDemandLink,
 } from "./types/radio/DiffusionLink";
 
