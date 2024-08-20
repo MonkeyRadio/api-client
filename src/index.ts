@@ -19,6 +19,7 @@ export {
 export { type PaginatedResponse } from "./types/PaginatedResponse";
 export { type StatsListenersResponse } from "./responses/diffusionSystem/StatsListenersResponse";
 export { type HealthCheckResponse } from "./responses/HealthCheckResponse";
+export { type CoverPostResponse } from "./responses/CoverResponses";
 
 // Opts
 export { type LoginOpts } from "./responses/AuthResponses";

@@ -6,6 +6,7 @@ import type { ConstructorOpts } from "./types/ConstructorOpts";
 import { ListenerRepository } from "./repositories/diffusionSystem/ListenersRepository";
 import { StatsRepository } from "./repositories/diffusionSystem/StatsRepository";
 import { HealthCheckRepository } from "./repositories/HealthCheckRepository";
+import { CoverRepository } from "./repositories/CoverRepository";
 
 export class MonkeyRadioAPI {
   private readonly fetcher: FetcherInstance;
@@ -14,6 +15,7 @@ export class MonkeyRadioAPI {
   public readonly radio: RadioRepository;
   public readonly auth: AuthRepository;
   public readonly health: HealthCheckRepository;
+  public readonly cover: CoverRepository;
 
   public readonly diffusionSystem: {
     listeners: ListenerRepository;
@@ -27,6 +29,7 @@ export class MonkeyRadioAPI {
     this.radio = new RadioRepository(this.fetcher);
     this.auth = new AuthRepository(this.fetcher);
     this.health = new HealthCheckRepository(this.fetcher);
+    this.cover = new CoverRepository(this.fetcher);
 
     this.diffusionSystem = {
       listeners: new ListenerRepository(this.fetcher),

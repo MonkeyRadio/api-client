@@ -79,6 +79,21 @@ export class FetcherInstance {
     });
   }
 
+  public async postMultipart<T>(
+    url: string,
+    body: FormData,
+    options?: FetchOptions<"json">,
+  ) {
+    return await ofetch<T>(url, {
+      method: "POST",
+      headers: {
+        ...(await this.getBaseHeaders()),
+      },
+      body,
+      ...options,
+    });
+  }
+
   public async put<T>(
     url: string,
     body: object,
