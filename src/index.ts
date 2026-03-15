@@ -2,6 +2,7 @@
 export { type Radio } from "./models/Radio";
 export { type User } from "./models/User";
 export { type Listener } from "./models/diffusionSystem/Listener";
+export { type Metadata } from "./models/diffusionSystem/Metadata";
 
 // Enums
 export {
