@@ -7,4 +7,6 @@ export interface Radio extends Model {
   websiteUrl: string;
   liveStream: (DiffusionLink | OnDemandLink)[];
   videoLiveUrl: string;
+  picture: string;
+  headline: string;
 }
