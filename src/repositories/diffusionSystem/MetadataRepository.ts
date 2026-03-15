@@ -2,7 +2,7 @@ import type { FetcherInstance } from "../../FetcherInstance";
 import type { Metadata } from "../../models/diffusionSystem/Metadata";
 
 export class MetadataRepository {
-  constructor(protected readonly instance: FetcherInstance) {}
+  constructor(protected readonly instance: FetcherInstance) { }
 
   protected get resource() {
     return `${this.instance.opts.diffusionUrl}/v1/metadata`;
@@ -14,7 +14,7 @@ export class MetadataRepository {
       .set("contentId", contentId)
       .set("radioId", radioId);
     return this.instance.get<Metadata>(
-      `${this.resource}/${radioId}/metadata/current?${this.instance.buildQueryString(query)}`,
+      `${this.resource}/current?${this.instance.buildQueryString(query)}`,
     );
   }
 }
